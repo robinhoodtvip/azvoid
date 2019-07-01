@@ -159,7 +159,7 @@ def AddDir(name, url, mode, iconimage='', logos='', index="", move=0, isFolder=T
 	
 def CheckUpdate(): #200
 	try:
-		uversao = urllib2.urlopen( "https://raw.githubusercontent.com/D4anielCB/CB/master/version.txt" ).read().replace('\n','').replace('\r','')
+		uversao = urllib2.urlopen( "https://raw.githubusercontent.com/robinhoodtvip/azvoid/master/versao.txt" ).read().replace('\n','').replace('\r','')
 		uversao = re.compile('[a-zA-Z\.\d]+').findall(uversao)[0]
 		#xbmcgui.Dialog().ok(Versao, uversao)
 		if uversao != Versao:
