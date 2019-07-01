@@ -1,5 +1,7 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import urllib, urlparse, sys, xbmcplugin ,xbmcgui, xbmcaddon, xbmc, os, json, hashlib, re, urllib2, htmlentitydefs
+
+Versao = "19.07.01"
 
 def getmd5(t):
 	value_altered = ''.join(chr(ord(letter)-1) for letter in t)
@@ -155,7 +157,7 @@ def AddDir(name, url, mode, iconimage='', logos='', index="", move=0, isFolder=T
 	xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=isFolder)
 	
 	
-def CheckUpdate(msg): #200
+def CheckUpdate(): #200
 	try:
 		uversao = urllib2.urlopen( "https://raw.githubusercontent.com/D4anielCB/CB/master/version.txt" ).read().replace('\n','').replace('\r','')
 		uversao = re.compile('[a-zA-Z\.\d]+').findall(uversao)[0]
@@ -163,34 +165,16 @@ def CheckUpdate(msg): #200
 		if uversao != Versao:
 			Update()
 			xbmc.executebuiltin("XBMC.Container.Refresh()")
-		elif msg==True:
-			xbmcgui.Dialog().ok('Cube Play', "O addon já esta na última versao: "+Versao+"\nAs atualizações normalmente são automáticas\nUse esse recurso caso nao esteja recebendo automaticamente")
-			xbmc.executebuiltin("XBMC.Container.Refresh()")
-	except urllib2.URLError, e:
-		if msg==True:
-			xbmcgui.Dialog().ok('Cube Play', "Não foi possível checar")
+	except:
+		pass
 
 def Update():
 	Path = xbmc.translatePath( xbmcaddon.Addon().getAddonInfo('path') ).decode("utf-8")
 	try:
-		fonte = urllib2.urlopen( "https://raw.githubusercontent.com/D4anielCB/CB/master/default.py" ).read().replace('\n','')
+		fonte = urllib2.urlopen( "https://raw.githubusercontent.com/robinhoodtvip/azvoid/master/default.py" ).read().replace('\n','')
 		prog = re.compile('#checkintegrity25852').findall(fonte)
 		if prog:
 			py = os.path.join( Path, "default.py")
-			file = open(py, "w")
-			file.write(fonte)
-			file.close()
-		fonte = urllib2.urlopen( "https://raw.githubusercontent.com/D4anielCB/CB/master/resources/settings.xml" ).read().replace('\n','')
-		prog = re.compile('</settings>').findall(fonte)
-		if prog:
-			py = os.path.join( Path, "resources/settings.xml")
-			file = open(py, "w")
-			file.write(fonte)
-			file.close()
-		fonte = urllib2.urlopen( "https://raw.githubusercontent.com/D4anielCB/CB/master/addon.xml" ).read().replace('\n','')
-		prog = re.compile('</addon>').findall(fonte)
-		if prog:
-			py = os.path.join( Path, "addon.xml")
 			file = open(py, "w")
 			file.write(fonte)
 			file.close()
@@ -230,6 +214,7 @@ episode = params.get('episode')
 if mode == 0:
 	Categories()
 	setViewM()
+	CheckUpdate()
 if mode == 71:
 	Categories2()
 	setViewM()
@@ -244,4 +229,4 @@ elif mode == 103:
 	PlayTVCB()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+#checkintegrity25852
